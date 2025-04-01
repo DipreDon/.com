@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYROS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<fond="bg-gray-100">
+</head>
+<body class="">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-600 p-4 text-white flex justify-between">
+        <img src="2ma.png" alt="logo de KYROS" class="w-16 h-16">
+        <div class="flex space-x-4">
+            <a href="index.html" class="hover:text-gray-300">Inicio</a>
+            <a href="tienda.html" class="hover:text-gray-300">Tienda</a>
+            <a href="contacto.html" class="hover:text-gray-300">Contacto</a>
+            <a href="nosotros.html" class="hover:text-gray-300">Nosotros</a>
+        </div>
+        <button onclick="verCarrito()" class="bg-white text-gray-600 px-4 py-1 rounded">🛒 Ver Carrito (<span id="contador">0</span>)</button>
+    </nav>
+
+    <!-- Productos -->
+    <div class="container mx-auto p-5">
+        <h2 class="text-xl font-bold mb-4">Productos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Producto 1 -->
+            <div class="bg-white p-4 shadow-md rounded">
+                <img src="YANKEE.jpg" class="w-full rounded">
+                <h3 class="text-lg font-bold mt-2">Gorra Yankee</h3>
+                <p class="text-gray-600">$20.00</p>
+                <button onclick="agregarAlCarrito('Gorra Negra', 20)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="bg-white p-4 shadow-md rounded">
+                <img src="JAPONES.jpg" class="w-full rounded">
+                <h3 class="text-lg font-bold mt-2">oriental</h3>
+                <p class="text-gray-600">$30.00</p>
+                <button onclick="agregarAlCarrito('Camiseta Oversize', 30)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="bg-white p-4 shadow-md rounded">
+                <img src="DOGERS.jpg" class="w-full rounded">
+                <h3 class="text-lg font-bold mt-2">DOGERS</h3>
+                <p class="text-gray-600">$15.00</p>
+                <button onclick="agregarAlCarrito('Vinil Flock', 15)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Carrito de compras -->
+    <div id="carrito" class="fixed top-0 right-0 w-1/3 bg-white shadow-lg p-4 hidden">
+        <h2 class="text-xl font-bold mb-2">Carrito</h2>
+        <ul id="lista-carrito"></ul>
+        <p class="font-bold mt-2">Total: $<span id="total">0.00</span></p>
+        <button onclick="cerrarCarrito()" class="mt-2 bg-red-500 text-white px-4 py-2 rounded">Cerrar</button>
+    </div>
+
+    <script>
+        let carrito = [];
+        
+        function agregarAlCarrito(nombre, precio) {
+            carrito.push({ nombre, precio });
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            let lista = document.getElementById("lista-carrito");
+            let total = 0;
+            lista.innerHTML = "";
+            carrito.forEach((item, index) => {
+                lista.innerHTML += `<li class="mb-2">${item.nombre} - $${item.precio} 
+                    <button onclick="eliminarDelCarrito(${index})" class="ml-2 text-red-600">❌</button></li>`;
+                total += item.precio;
+            });
+            document.getElementById("contador").innerText = carrito.length;
+            document.getElementById("total").innerText = total.toFixed(2);
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function verCarrito() {
+            document.getElementById("carrito").classList.remove("hidden");
+        }
+
+        function cerrarCarrito() {
+            document.getElementById("carrito").classList.add("hidden");
+        }
+    </script>
+
+</body>
+</html>
